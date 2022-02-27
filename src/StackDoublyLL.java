@@ -1,17 +1,18 @@
 import java.util.Scanner;
 
-class Node
+class Node1
 {
     int data;
-    Node next;
-    public Node(int data)
+    Node1 next;
+    Node1 previous;
+    public Node1(int data)
     {
         this.data=data;
     }
 }
-public class StackBySinglyLL
+public class StackDoublyLL
 {
-    Node top;
+    Node1 top;
 
     public boolean isEmpty()
     {
@@ -22,7 +23,7 @@ public class StackBySinglyLL
         return false;
     }
 
-   /* public void push(Node newnode)
+   /* public void push(Node1 newnode)
     {
         if(isEmpty())
         {
@@ -35,19 +36,20 @@ public class StackBySinglyLL
 
     public void push(int data)
     {
-        Node newnode=new Node(data);
+        Node1 newnode=new Node1(data);
         if(top==null)
         {
             top=newnode;
             return ;
         }
         newnode.next=top;
+        top.previous=newnode;
         top=newnode;
     }
 
   /*  public void push(int data)
     {
-        Node newnode=new Node(data);
+        Node1 newnode=new Node1(data);
         newnode.next=top;
         top=newnode;
     }*/
@@ -61,6 +63,7 @@ public class StackBySinglyLL
         }
         System.out.println(top.data);
         top=top.next;
+        top.previous=null;
     }
 
     public void peek()
@@ -80,26 +83,46 @@ public class StackBySinglyLL
             System.out.println("empty");
             return;
         }
-        Node temp=top;
+        Node1 temp=top;
         while(temp!=null)
         {
             System.out.print(temp.data+ " ");
             temp=temp.next;
         }
     }
+
+    public void reverse()
+    {
+        if(top==null)
+        {
+            System.out.println("empty");
+            return;
+        }
+        Node1 temp=top;
+        while(temp.next!=null)
+        {
+            temp=temp.next;
+        }
+        while(temp!=null)
+        {
+            System.out.println(temp.data);
+            temp=temp.previous;
+        }
+    }
 }
-class Test1
+class Test2
 {
     public static void main(String[] args)
     {
         char ch='y';
         Scanner sc=new Scanner(System.in);
-        StackBySinglyLL obj=new StackBySinglyLL();
+        StackDoublyLL obj= new StackDoublyLL();
         System.out.println("""
                 press <1> for push
                 press <2> for pop
                 press <3> for peek
-                press <4> print\n""");
+                press <4> print
+                press <5> for displaying in reverse\n""");
         while(ch=='y'||ch=='Y')
         {
             int n=sc.nextInt();
@@ -119,6 +142,9 @@ class Test1
                     break;
                 case 4:
                     obj.display();
+                    break;
+                case 5:
+                    obj.reverse();
                     break;
                 default:
                     System.out.println("invalid input");
